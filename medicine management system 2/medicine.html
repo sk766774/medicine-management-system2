@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Medicine Management System</title>
+
+    <link rel="stylesheet" href="medicine.css">
+</head>
+
+<body>
+
+    <!-- Main Application -->
+    <div class="app-container">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <div class="logo">
+                <div class="logo-icon">✚</div>
+
+                <div>
+                    <h2>MediStock</h2>
+                    <p>Medicine Manager</p>
+                </div>
+            </div>
+
+            <div class="profile">
+                <div class="profile-icon">M</div>
+
+                <div>
+                    <h3>Medicine Store</h3>
+                    <p>Inventory Dashboard</p>
+                </div>
+            </div>
+
+            <nav class="navigation">
+
+                <button class="nav-btn active"
+                        data-view="dashboard">
+                    <span>▦</span> Dashboard
+                </button>
+
+                <button class="nav-btn"
+                        data-view="inventory">
+                    <span>▤</span> Medicine Inventory
+                </button>
+
+                <button class="nav-btn"
+                        data-view="alerts">
+                    <span>⚠</span> Stock & Expiry Alerts
+                </button>
+
+                <button class="nav-btn"
+                        data-view="reports">
+                    <span>▥</span> Reports
+                </button>
+
+            </nav>
+
+            <div class="sidebar-footer">
+                <h4>Student Project</h4>
+
+                <p>
+                    Medicine Management System
+                    developed using HTML, CSS
+                    and JavaScript.
+                </p>
+            </div>
+
+        </aside>
+
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- Header -->
+            <header class="topbar">
+
+                <div>
+                    <p class="small-heading">
+                        MEDICINE INVENTORY SYSTEM
+                    </p>
+
+                    <h1 id="pageTitle">Dashboard</h1>
+                </div>
+
+                <div class="header-right">
+
+                    <div class="date-box">
+                        <span>Today</span>
+                        <strong id="currentDate"></strong>
+                    </div>
+
+                    <button class="btn btn-primary"
+                            id="addMedicineBtn">
+                        + Add Medicine
+                    </button>
+
+                </div>
+
+            </header>
+
+
+            <!-- Dashboard View -->
+            <section id="dashboardView" class="view">
+
+                <div class="welcome-banner">
+
+                    <div>
+                        <p>INVENTORY MANAGEMENT</p>
+
+                        <h2>
+                            Welcome to Medicine Management System
+                        </h2>
+
+                        <span>
+                            Manage medicine stock and inventory
+                            from one place.
+                        </span>
+                    </div>
+
+                    <div class="banner-icon">✚</div>
+
+                </div>
+
+
+                <!-- Statistics Cards -->
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+                        <div class="stat-icon blue-bg">▤</div>
+
+                        <p>Total Medicines</p>
+
+                        <h2 id="totalMedicines">0</h2>
+
+                        <small>Medicine records</small>
+                    </div>
+
+
+                    <div class="stat-card">
+                        <div class="stat-icon green-bg">▣</div>
+
+                        <p>Total Stock Units</p>
+
+                        <h2 id="totalStock">0</h2>
+
+                        <small>Available inventory units</small>
+                    </div>
+
+
+                    <div class="stat-card">
+                        <div class="stat-icon orange-bg">⚠</div>
+
+                        <p>Low Stock</p>
+
+                        <h2 id="lowStock">0</h2>
+
+                        <small>Needs stock review</small>
+                    </div>
+
+
+                    <div class="stat-card">
+                        <div class="stat-icon red-bg">◷</div>
+
+                        <p>Expiry Alerts</p>
+
+                        <h2 id="expiryCount">0</h2>
+
+                        <small>Expired or expiring soon</small>
+                    </div>
+
+                </div>
+
+
+                <!-- Dashboard Tables -->
+                <div class="dashboard-grid">
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+                            <div>
+                                <h3>Recent Medicines</h3>
+                                <p>Recently added inventory</p>
+                            </div>
+
+                            <button class="text-btn"
+                                    data-goto="inventory">
+                                View All →
+                            </button>
+                        </div>
+
+                        <div class="table-responsive">
+
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Medicine</th>
+                                        <th>Category</th>
+                                        <th>Quantity</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="recentMedicines">
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+                            <div>
+                                <h3>Attention Required</h3>
+                                <p>Stock and expiry notifications</p>
+                            </div>
+                        </div>
+
+                        <div id="dashboardAlerts"
+                             class="alert-list">
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- Inventory View -->
+            <section id="inventoryView"
+                     class="view hidden">
+
+                <div class="panel">
+
+                    <div class="panel-header inventory-header">
+
+                        <div>
+                            <h3>Medicine Inventory</h3>
+
+                            <p>
+                                Add, update, search and manage medicines.
+                            </p>
+                        </div>
+
+                        <button class="btn btn-primary"
+                                id="addMedicineBtn2">
+                            + Add Medicine
+                        </button>
+
+                    </div>
+
+
+                    <!-- Search and Filters -->
+                    <div class="filter-row">
+
+                        <input
+                            type="search"
+                            id="searchMedicine"
+                            placeholder="Search medicine, company, ID..."
+                        >
+
+                        <select id="categoryFilter">
+                            <option value="">All Categories</option>
+                            <option value="Tablet">Tablet</option>
+                            <option value="Capsule">Capsule</option>
+                            <option value="Syrup">Syrup</option>
+                            <option value="Injection">Injection</option>
+                            <option value="First Aid">First Aid</option>
+                            <option value="Other">Other</option>
+                        </select>
+
+                        <select id="stockFilter">
+                            <option value="">All Stock Status</option>
+                            <option value="In Stock">In Stock</option>
+                            <option value="Low Stock">Low Stock</option>
+                            <option value="Out of Stock">Out of Stock</option>
+                        </select>
+
+                    </div>
+
+
+                    <div class="table-responsive">
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Medicine Details</th>
+                                    <th>Category</th>
+                                    <th>Company</th>
+                                    <th>Quantity</th>
+                                    <th>Expiry Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="medicineTable">
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                    <p id="noResults" class="empty-message hidden">
+                        No medicine records found.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- Alerts View -->
+            <section id="alertsView"
+                     class="view hidden">
+
+                <div class="dashboard-grid">
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+                            <div>
+                                <h3>Stock Alerts</h3>
+                                <p>Medicines requiring stock review</p>
+                            </div>
+                        </div>
+
+                        <div id="stockAlerts"></div>
+
+                    </div>
+
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+                            <div>
+                                <h3>Expiry Alerts</h3>
+                                <p>Review medicine expiry dates</p>
+                            </div>
+                        </div>
+
+                        <div id="expiryAlerts"></div>
+
+                    </div>
+
+                </div>
+
+                <div class="notice">
+                    These alerts are for educational demonstration only.
+                    Always verify medicine packaging, batch details and
+                    expiry information before any real-world action.
+                </div>
+
+            </section>
+
+
+            <!-- Reports View -->
+            <section id="reportsView"
+                     class="view hidden">
+
+                <div class="panel">
+
+                    <div class="panel-header">
+                        <div>
+                            <h3>Inventory Reports</h3>
+
+                            <p>
+                                View summary and export inventory data.
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div id="reportSummary"
+                         class="report-grid">
+                    </div>
+
+
+                    <div class="report-actions">
+
+                        <button class="btn btn-primary"
+                                id="exportCSV">
+                            Download CSV Report
+                        </button>
+
+                        <button class="btn btn-secondary"
+                                id="printReport">
+                            Print / Save PDF
+                        </button>
+
+                        <button class="btn btn-danger"
+                                id="resetData">
+                            Reset Demo Data
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- Add/Edit Medicine Dialog -->
+    <dialog id="medicineDialog">
+
+        <form id="medicineForm">
+
+            <div class="dialog-header">
+
+                <div>
+                    <p class="small-heading">MEDICINE RECORD</p>
+
+                    <h2 id="dialogHeading">
+                        Add New Medicine
+                    </h2>
+                </div>
+
+                <button type="button"
+                        class="close-btn"
+                        id="closeDialog">
+                    ×
+                </button>
+
+            </div>
+
+
+            <input type="hidden" id="medicineId">
+
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label for="medicineName">
+                        Medicine Name *
+                    </label>
+
+                    <input
+                        type="text"
+                        id="medicineName"
+                        maxlength="80"
+                        placeholder="Enter medicine name"
+                        required
+                    >
+                </div>
+
+
+                <div class="form-group">
+                    <label for="medicineCategory">
+                        Category *
+                    </label>
+
+                    <select id="medicineCategory" required>
+                        <option value="">Select Category</option>
+                        <option value="Tablet">Tablet</option>
+                        <option value="Capsule">Capsule</option>
+                        <option value="Syrup">Syrup</option>
+                        <option value="Injection">Injection</option>
+                        <option value="First Aid">First Aid</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="medicineCompany">
+                        Company Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="medicineCompany"
+                        maxlength="80"
+                        placeholder="Enter company name"
+                    >
+                </div>
+
+
+                <div class="form-group">
+                    <label for="medicineBatch">
+                        Batch Number
+                    </label>
+
+                    <input
+                        type="text"
+                        id="medicineBatch"
+                        maxlength="40"
+                        placeholder="Enter batch number"
+                    >
+                </div>
+
+
+                <div class="form-group">
+                    <label for="medicineQuantity">
+                        Quantity *
+                    </label>
+
+                    <input
+                        type="number"
+                        id="medicineQuantity"
+                        min="0"
+                        step="1"
+                        value="0"
+                        required
+                    >
+                </div>
+
+
+                <div class="form-group">
+                    <label for="medicineReorder">
+                        Reorder Level *
+                    </label>
+
+                    <input
+                        type="number"
+                        id="medicineReorder"
+                        min="0"
+                        step="1"
+                        value="10"
+                        required
+                    >
+                </div>
+
+
+                <div class="form-group">
+                    <label for="medicineExpiry">
+                        Expiry Date *
+                    </label>
+
+                    <input
+                        type="date"
+                        id="medicineExpiry"
+                        required
+                    >
+                </div>
+
+
+                <div class="form-group">
+                    <label for="medicinePrice">
+                        Unit Price (₹)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="medicinePrice"
+                        min="0"
+                        step="0.01"
+                        value="0"
+                    >
+                </div>
+
+
+                <div class="form-group full-width">
+                    <label for="medicineNotes">
+                        Supplier / Notes
+                    </label>
+
+                    <textarea
+                        id="medicineNotes"
+                        rows="3"
+                        maxlength="250"
+                        placeholder="Optional information"
+                    ></textarea>
+                </div>
+
+            </div>
+
+
+            <p class="form-note">
+                Use fictional data for this student project.
+            </p>
+
+
+            <div class="dialog-actions">
+
+                <button type="button"
+                        class="btn btn-secondary"
+                        id="cancelDialog">
+                    Cancel
+                </button>
+
+                <button type="submit"
+                        class="btn btn-primary">
+                    Save Medicine
+                </button>
+
+            </div>
+
+        </form>
+
+    </dialog>
+
+
+    <!-- Notification -->
+    <div id="toast" class="toast"></div>
+
+
+    <script src="medicine.js"></script>
+
+</body>
+</html>
